@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Corrosion damage", "Corrosion damage\Corrosion damage.csproj", "{7E79BB6E-611A-492F-AFD1-0214E705BFF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RustCheck", "RustCheck\RustCheck.csproj", "{6B1C9C42-E464-4C38-B8ED-B91D6494E620}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E79BB6E-611A-492F-AFD1-0214E705BFF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E79BB6E-611A-492F-AFD1-0214E705BFF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E79BB6E-611A-492F-AFD1-0214E705BFF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E79BB6E-611A-492F-AFD1-0214E705BFF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1C9C42-E464-4C38-B8ED-B91D6494E620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1C9C42-E464-4C38-B8ED-B91D6494E620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1C9C42-E464-4C38-B8ED-B91D6494E620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1C9C42-E464-4C38-B8ED-B91D6494E620}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57DD494D-BC61-4AF9-970F-AAF6F94876D9}
+	EndGlobalSection
+EndGlobal

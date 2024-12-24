@@ -1,0 +1,167 @@
+﻿<Window x:Class="RustCheck.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:RustCheck"
+        
+        xmlns:viewmodels="clr-namespace:RustCheck.MVVM.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ApplicationModelView}"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="864" Width="1536" WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style TargetType="TabControl">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" VerticalAlignment="Center">
+            <MenuItem Header="Открыть"/>
+            <MenuItem Header="Сохранить"/>
+            <MenuItem Header="Закрыть">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding CloseCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </MenuItem>
+        </Menu>
+
+        <TabControl Grid.Row="1" x:Name="MainTab">
+            <TabItem Header="Выделение пластинок">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="683"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="0.25*" MinWidth="336"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Viewbox Stretch="Uniform" MaxWidth="1064" Grid.Row="0">
+                                <Grid Grid.Column="0" MinHeight="384">
+                                    <Rectangle Margin="20" RadiusX="10" RadiusY="10" Fill="{Binding ImageBrush, Mode=OneWay}"
+                                            Stroke="Silver" StrokeThickness="3" StrokeDashArray="10" Cursor="Hand" StrokeDashCap="Round"
+                                            AllowDrop="True" Width="{Binding ImageWidth}" Height="{Binding ImageHeight}" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:CallMethodAction MethodName="LoadImage" TargetObject="{Binding}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding LoadClickCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Rectangle>
+                                    <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="0"
+                                        Visibility="{Binding LogoMarker, UpdateSourceTrigger=PropertyChanged}">
+                                        <Canvas MaxHeight="35"
+                                        MaxWidth="35"
+                                        Height="35"
+                                        Width="35"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                            <Path Stroke="Gray"
+                                        StrokeThickness="1"
+                                        StrokeStartLineCap="Round"
+                                        StrokeEndLineCap="Round"
+                                        StrokeLineJoin="Round"
+                                        Stretch="Fill"
+                                        Width="30"
+                                        Height="35">
+                                                <Path.Data>
+                                                    <GeometryGroup>
+                                                        <PathGeometry
+                                                    Figures="M13.5 3H12H8C6.34315 3 5 4.34315 5 
+                                                    6V18C5 19.6569 6.34315 21 8 21H12M13.5 3L19
+                                                    8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625
+                                                    14.5 8.625H19M19 8.625V11.8125"/>
+                                                        <PathGeometry
+                                                    Figures="M17.5 21L17.5 15M17.5 15L20 17.5M17.5 15L15 17.5"/>
+                                                    </GeometryGroup>
+                                                </Path.Data>
+                                            </Path>
+                                        </Canvas>
+                                        <TextBlock Text="Загрузка файла" FontSize="12" Foreground="Gray"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Viewbox>
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+                                <TextBlock Text="Гамма-коррекция:" Margin="0 0 10 0"/>
+                                <Slider Orientation="Horizontal" Width="250" Minimum="0" Maximum="5" Value="{Binding GammaSliderValueShow}"
+                                        IsEnabled="{Binding ImageExist}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="ValueChanged">
+                                            <i:CallMethodAction MethodName="MainImageGammaChange" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Slider>
+                            </StackPanel>
+
+                        </Grid>
+                    </ScrollViewer>
+
+                    <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="3"/>
+
+                    <GroupBox Header="Поиск пластинок" FontSize="16" Grid.Column="2" Height="555" Margin="20 0 20 0" BorderBrush="LightGray">
+                        <StackPanel IsEnabled="{Binding ImageExist}" Focusable="True" Background="Transparent" VerticalAlignment="Center">
+                            <Slider HorizontalAlignment="Center" Margin="0 20 0 0" Minimum="0" Maximum="5" Value="{Binding GammaSliderValueSearch}"
+                                    Orientation="Vertical" Height="400">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="ValueChanged">
+                                        <i:InvokeCommandAction Command="{Binding FindPlastinCommand}"/>
+                                    </i:EventTrigger>    
+                                </i:Interaction.Triggers>
+                            </Slider>
+
+                            <Button Content="Рассчитать" Background="WhiteSmoke"
+                                    Foreground="Black" BorderBrush="Black" Margin="20 20 20 0" IsDefault="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:CallMethodAction MethodName="CompileNewPlastinsForm" TargetObject="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                        </StackPanel>
+                    </GroupBox>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+    
+</Window>
